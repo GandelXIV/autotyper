@@ -74,10 +74,9 @@ def apply_random(text):
 # run
 def start_typing():
     for char in text:
-        print(char)
         if char == "§":
-            print("PRESSED")
-            pag.press(random.choice(config["mistake-keys"]))
+            try: pag.press(codes[random.choice(config["mistake-keys"])])
+            except: pag.press(random.choice(config["mistake-keys"]))
             pag.press("backspace")
         try: pag.press(codes[char])
         except: pag.press(char)
@@ -100,7 +99,6 @@ try: text = rf(config["textfile"])
 except: error("Could not find text file!")
 if "mistakes" in config:
     text = apply_random(text)
-    print(text)
 kb.add_hotkey(config['start'], start_typing)
 # destruct
 input("Press enter to end program...")
