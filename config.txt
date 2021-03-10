@@ -1,0 +1,3 @@
+textfile:text.txt
+speed:600
+start:f2

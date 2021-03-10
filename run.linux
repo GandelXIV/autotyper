@@ -1,0 +1,3 @@
+source venv-linux/bin/activate
+xhost +
+sudo python3 autotyper.py
