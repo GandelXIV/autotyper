@@ -8,7 +8,7 @@ import json
 CONFIG_FILE = "config.txt"
 
 def rf(name):
-    with open(name, "r") as f:
+    with open(name, "r", encoding="utf-8") as f:
         return f.read()
 
 def parse_config(rawconfig):
