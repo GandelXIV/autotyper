@@ -1,3 +1,4 @@
+print("Loading...")
 import pyautogui as pag # using this instead of kb because of linux compatibility issues
 import keyboard as kb
 import time
@@ -5,7 +6,47 @@ import random
 import sys
 import json
 
+codes = {
+            "\n":"enter",
+            # need czech keyboard
+            "ř":["+", "r"],
+            "ě":["+","e"],
+            "š":["+","s"],
+            "č":["+","c"],
+            "ž":["+","z"],
+            "ý":["=","y"],
+            "á":["=","a"],
+            "í":["=","i"],
+            "é":["=","e"],
+            "ď":["+","d"],
+            "é":["=","e"],
+            "ň":["+","n"],
+            "ó":["=","o"],
+            "ú":["=","u"],
+            "ť":["+","t"],
+            "ů":";",
+            "Ř":["+", "R"],
+            "Ě":["+","E"],
+            "Š":["+","S"],
+            "Č":["+","C"],
+            "Ž":["+","Z"],
+            "Ý":["=","Y"],
+            "Á":["=","A"],
+            "Í":["=","I"],
+            "É":["=","E"],
+            "Ď":["+","D"],
+            "É":["=","E"],
+            "Ň":["+","N"],
+            "Ó":["=","O"],
+            "Ú":["=","U"],
+            "Ť":["+","T"],
+            "Ů":";",
+}
+
 CONFIG_FILE = "config.txt"
+
+def error(msg):
+    raise BaseException(msg)
 
 def rf(name):
     with open(name, "r", encoding="utf-8") as f:
@@ -24,9 +65,7 @@ def parse_config(rawconfig):
 # run
 def start_typing():
     for char in text:
-        codes = {
-            "\n":"enter"
-        }
+        
         try: pag.press(codes[char])
         except: pag.press(char)
         wait_time = (60/config["speed"]) - press_load_time
@@ -40,9 +79,12 @@ press_load_time = time.time()-start
 print("oad press time:", press_load_time)
 print("Max typing speed: cca", round(60/press_load_time))
 # init
-rawconfig = rf(CONFIG_FILE)
-config = parse_config(rawconfig)
-text = rf(config["textfile"])
+try: rawconfig = rf(CONFIG_FILE)
+except: error("Missing config.txt!")
+try: config = parse_config(rawconfig)
+except: error("Invalid config.txt!")
+try: text = rf(config["textfile"])
+except: error("Could not find text file!")
 kb.add_hotkey(config['start'], start_typing)
 # destruct
 input("Press enter to end program...")
