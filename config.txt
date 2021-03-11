@@ -1,3 +1,5 @@
 textfile:text.txt
 speed:600
 start:f2
+mistakes:2
+mistake-keys:qwertyuiopasdfghjklzxcvbnm

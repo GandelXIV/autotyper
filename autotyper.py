@@ -64,8 +64,14 @@ def parse_config(rawconfig):
 
 # run
 def start_typing():
+    if "mistakes" in config:
+        mistake_count = 0
     for char in text:
-        
+        if "mistakes" in config:
+            r = random.randint(1,len(char))
+            if r <= int(config["mistakes"]):
+                pag.press(random.choice(config["mistake-keys"]))
+                pag.press("backspace")
         try: pag.press(codes[char])
         except: pag.press(char)
         wait_time = (60/config["speed"]) - press_load_time
