@@ -62,16 +62,23 @@ def parse_config(rawconfig):
     config["speed"] = int(config["speed"])
     return config
 
+def apply_random(text):
+    a = list(text)
+    for i in range(int(config["mistakes"])):
+        a.insert(random.randrange(0, len(text)), "§")
+    newtext = ''
+    for e in a:
+        newtext += e
+    return newtext
+
 # run
 def start_typing():
-    if "mistakes" in config:
-        mistake_count = 0
     for char in text:
-        if "mistakes" in config:
-            r = random.randint(1,len(char))
-            if r <= int(config["mistakes"]):
-                pag.press(random.choice(config["mistake-keys"]))
-                pag.press("backspace")
+        print(char)
+        if char == "§":
+            print("PRESSED")
+            pag.press(random.choice(config["mistake-keys"]))
+            pag.press("backspace")
         try: pag.press(codes[char])
         except: pag.press(char)
         wait_time = (60/config["speed"]) - press_load_time
@@ -91,6 +98,9 @@ try: config = parse_config(rawconfig)
 except: error("Invalid config.txt!")
 try: text = rf(config["textfile"])
 except: error("Could not find text file!")
+if "mistakes" in config:
+    text = apply_random(text)
+    print(text)
 kb.add_hotkey(config['start'], start_typing)
 # destruct
 input("Press enter to end program...")
