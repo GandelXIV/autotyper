@@ -10,3 +10,5 @@ You can configurate the program via config.txt (must be in the same directory/fo
 textfile: path to file containing text to type
 speed: typing speed in cpm (characters per minute)
 start: default shortcut to start typing. Example: ctrl+shift+r
+mistakes: number mistakes the program is going to do (automatically corrects it)
+mistake-keys: keys they will type while doing a mistake
